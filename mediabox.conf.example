@@ -1,0 +1,68 @@
+# Example Mediabox Configuration File
+
+# -===== Set some general video options =====-
+# Screen size, of the form <width>x<height>
+Video.size = 800x600
+# Target framerate. 
+Video.framerate = 5
+# Graphics-plugin specific options, in a comma-delimited list.
+# For SDL, these can be any of HWSURFACE, DOUBLEBUF, FULLSCREEN
+Video.options = HWSURFACE,DOUBLEBUF
+# Show the cursor: true/false
+Video.showcursor = true
+
+# -===== Mediabox core configuration ========-
+# Where to store the log file. Can be STDERR, STDOUT, or a filename
+# defaults to STDERR
+Logger.file = STDERR
+
+# -===== Plugins ============================-
+# Load a plugin for the 'graphics' slot. Right now, the only valid
+# graphics plugin is 'SDL', built off of RubyGame.
+Plugin.graphics = SDL
+
+# Load a plugin to translate input into Mediabox events. Right now,
+# the only valid events plugin is 'SDLEvents', and it's very limited.
+Plugin.events = SDLEvents
+
+# Load a plugin to provide a uniform background across screens
+# Can be any of the plugins in plugins/background/
+Plugin.background = DefaultBackground
+
+# Load 'slotless' plugins that don't have any specific function,
+# but are invoked on every tick and can provide extra functionality
+# to screens, or extend the default behaviour of Mediabox-core in some way
+# Can be any of the plugins in plugins/, except for plugins filling
+# the slots above (i.e. don't load an extra background, event, or graphics
+# plugin here.
+Plugin.load = Random
+
+# -===== Screens ============================-
+# Space-delimited list of screens to load. Can be any of the screens in 
+# screens/
+Screen.load = Clock
+# Screen to display first.
+Screen.start = Clock
+
+# -===== Screen Configuration ===============-
+# Specify screen-specific configuration options here. Consult the documentation
+# for individual screens to determine what options they support; format
+# options for a given screen as "ScreenName.option = value"
+
+# The options here are general good settings; at any rate, I like them. Note
+# that there's no harm in setting options for screens or plugins you're not 
+# loading.
+Slideshow.interval = 10
+SystemInfo.interface = eth0
+SystemInfo.background = false
+RecentTracks.username = doches
+RecentTracks.interval = 5
+TopAlbums.interval = 1
+TopAlbums.username = doches
+Fortune.interval=5
+
+# -===== Plugin Configuration ===============-
+# Works exactly like screen configuration, but for plugins.
+Rotate.interval=10
+Random.interval=15
+Background.color = 32,32,32
