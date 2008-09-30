@@ -7,7 +7,7 @@ class SDLEvents < EventsPlugin
   
   def initialize
     @queue = EventQueue.new
-    @queue.ignore = [MouseMotionEvent,KeyDownEvent,KeyUpEvent,MouseDownEvent,MouseUpEvent]
+    @queue.ignore = [MouseMotionEvent,KeyUpEvent,MouseDownEvent,MouseUpEvent]
   end
   
   def translate(sdl_event)
@@ -16,6 +16,11 @@ class SDLEvents < EventsPlugin
         return Messages::Redraw
       when QuitEvent
         return Messages::Quit
+      when KeyDownEvent
+        case sdl_event.key
+          when K_ESCAPE
+            return Messages::Quit
+        end
     end
   end
   

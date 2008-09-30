@@ -110,13 +110,14 @@ class Rect < Widget
 end
 
 class Image < Widget
-  attr_reader :x,:y,:alpha
+  attr_reader :x,:y,:alpha,:store
+  
   def initialize(x,y,path)
     super()
     @x=x
     @y=y
     @path=path
-    @alpha=255
+    @alpha=1.0
     
     self.store = Widget.graphics.load_image(path,self.store)
   end
@@ -157,7 +158,7 @@ class Image < Widget
   
   def fit_inside(w,h)
     size = self.size
-    
+
     factor = 1
     # Too wide & tall
     if w < size[0] and h < size[1]

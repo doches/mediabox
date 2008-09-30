@@ -2,6 +2,8 @@ require 'screens/screen'
 require 'lib/widgets'
 
 class SystemInfo < Screen
+  Interval = 5
+
   def initialize
     super
     
@@ -42,6 +44,8 @@ class SystemInfo < Screen
     }
     
     @stats.each { |id,label| add(label) }
+    
+    @tick = Time.now.to_i - Interval - 1
   end
   
   def process(msg)
@@ -49,6 +53,9 @@ class SystemInfo < Screen
   end
   
   def update
+    tock = Time.now.to_i
+    sleep(Interval - (tock - @tick)) if tock - @tick <= Interval
+    @tick = tock
     ps = `ps -p #{Process.pid} -o pcpu,pmem,start`.split("\n")
     ps = ps[1].strip.split(/\s+/)
     cpu = ps[0]

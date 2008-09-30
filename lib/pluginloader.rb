@@ -3,6 +3,7 @@ module Mediabox
 
 class PluginLoader
   attr_accessor :screens
+  attr_reader :plugins,:slotless_plugins
   
   def PluginLoader.preferences=(hash)
     @@preferences = hash

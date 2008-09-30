@@ -7,6 +7,7 @@ class Rotate < Plugin
     @interval ||= 5
     @list = Plugin.loader.screens.screenlist
     @current = @list.index("#{Plugin.loader.screens.current.class}".to_sym)
+    @current ||= 0
   end
   
   def update
