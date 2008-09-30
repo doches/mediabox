@@ -1,0 +1,27 @@
+Trevor Fountain, 30 September 2008
+doches@gmail.com
+
+Mediabox is a highly configurable, plugin-based architecture for building 
+frontends to multimedia PCs running GNU/Linux or OS X. By itself, Mediabox is
+essentially useless -- all of the functionality comes from loaded plugins and
+'screens'.
+
+Read the 'mediabox.conf.example' file for information on how to set up Mediabox.
+
+Mediabox recognizes several types of plugins. The first, and most important, 
+are 'screens' -- a screen is a largely self-contained program that does some
+processing every tick, and displays some output to the screen. Only one screen
+can be active at a time, but screens may yield execution to another screen of
+their choice at any time. Depending on your application for Mediabox you will
+load particular screens, or sets of screens. For example, the 'Slideshow' 
+screen allows Mediabox to act like a digital picture frame, rotating through
+images in a specified directory, the 'RecentTracks' screen displays a list of
+recently played music from a user's Last.fm profile, and 'Clock' displays the
+current time.
+
+Secondly, Mediabox recognized both 'slotted' and 'unslotted' plugins. 'slotted'
+plugins fill a particular role, and you may only have a single plugin loaded
+per slot. For example, the graphics engine Mediabox uses to draw screens is 
+implemented as a slotted plugin -- it would make little sense to load both SDL
+and OpenGL engines. Conversely, multiple 'unslotted' plugins may be loaded; an
+'unslotted' plugin extends Mediabox with additional features or functionality.
