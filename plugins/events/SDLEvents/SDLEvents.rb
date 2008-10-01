@@ -28,6 +28,8 @@ class SDLEvents < EventsPlugin
             return Messages::Up
           when K_DOWN
             return Messages::Down
+          when K_SPACE
+            return Messages::Pause
         end
     end
   end
