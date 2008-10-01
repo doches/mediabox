@@ -66,14 +66,14 @@ class ScreenLoader
   
   def switch_to(screen)
     if not @screens.include?(screen)
-      #Mediabox::Logger.log("Screen #{screen} not found -- called by #{@current}")
+      Logger.log("Screen #{screen} not found -- called by #{@current}")
       return false
     end
     screen = @screens[screen]
     @history.push @current
     @current.lose_focus if @current.respond_to?(:lose_focus)
     @current = screen
-    @screen.on_focus if screen.respond_to?(:on_focus)
+    screen.on_focus if screen.respond_to?(:on_focus)
     
     @current.drawlist[0].change! if @current.drawlist[0].respond_to?(:change!)
     return true

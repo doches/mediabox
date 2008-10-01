@@ -59,6 +59,22 @@ class PluginLoader
     send_to_all(:close,true)
   end
   
+  def process(msg,log=false)
+    @plugins.each { |key,plugin| 
+      if plugin.respond_to?(:process)
+        Logger.log("Plugin[#{key}].process #{msg}") if log
+        return true if plugin.process(msg)
+      end
+    }
+    @slotless_plugins.each { |key,plugin|
+      if plugin.respond_to?(:process)
+        plugin.process(msg)
+        return true if Logger.log("Plugin[#{key}].process #{msg}") if log
+      end
+    }
+    return false
+  end
+  
   def send_to_all(msg,log=false)
     @plugins.each { |key,plugin| 
       if plugin.respond_to?(msg)

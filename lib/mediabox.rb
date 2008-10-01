@@ -40,7 +40,11 @@ class Mediabox
             when Messages::Quit
               throw :quit
             else
-              @screens.current.process(event) if not event.nil?
+              if not event.nil?
+                if not @screens.current.process(event)
+                  @plugins.process(event)
+                end
+              end
           end
         }
         
