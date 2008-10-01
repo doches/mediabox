@@ -20,6 +20,14 @@ class SDLEvents < EventsPlugin
         case sdl_event.key
           when K_ESCAPE
             return Messages::Quit
+          when K_LEFT
+            return Messages::Left
+          when K_RIGHT
+            return Messages::Right
+          when K_UP
+            return Messages::Up
+          when K_DOWN
+            return Messages::Down
         end
     end
   end
