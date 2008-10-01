@@ -5,4 +5,5 @@ module Messages
   Right = 3
   Up = 4
   Down = 5
+  Pause = 6
 end
