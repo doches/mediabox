@@ -2,7 +2,7 @@ class Screen
 
   # Screens should implement this method to handle messages.
   def process(msg)
-    throw :not_implemented
+    return false
   end
   
   # Screens should implement this method to update their state every tick.
