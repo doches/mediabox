@@ -48,10 +48,6 @@ class SystemInfo < Screen
     @tick = Time.now.to_i - Interval - 1
   end
   
-  def process(msg)
-    ; # Do nothing.
-  end
-  
   def update
     tock = Time.now.to_i
     sleep(Interval - (tock - @tick)) if tock - @tick <= Interval

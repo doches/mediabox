@@ -78,10 +78,6 @@ class TopAlbums < Screen
     end
   end
 
-  def process(msg)
-    # do nothing
-  end
-  
   def update
     tick = Time.now.to_i
     if tick - @last_tick > @interval and not @extras.empty?

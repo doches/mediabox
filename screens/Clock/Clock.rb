@@ -10,6 +10,7 @@ class Clock < Screen
     font.color = [255,255,255]
     @time = Widgets::Label.new(0,0,"?",font)    
     @shadow = Widgets::Label.new(0,0,"?",shadowfont)
+    @shadow.alpha = 255
     
     dshadowfont = Widgets::Font.new("trebuc.ttf",64)
     dshadowfont.color = [16,16,16]
