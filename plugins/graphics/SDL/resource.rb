@@ -5,13 +5,21 @@
     def initialize( name, &blk )
       Plugin.loader.screens.autoload_dirs.each { |dir|
         if File.exists?(File.join(dir,name))
-          Mediabox::Logger.log("Loading resource #{name} ... OK")
-          path = "#{dir}/#{name}"
-          @surface = blk.call(path)
+          load(dir,name,blk)
           return
         end
       }
-      throw LoadError.new("#{name} not found")
+      if File.exists?(name)
+        load("",name,blk)
+      else
+        throw LoadError.new("#{name} not found")
+      end
+    end
+    
+    def load(dir,name,blk)
+      Mediabox::Logger.log("Loading resource #{name} ... OK")
+      path = "#{dir}/#{name}"
+      @surface = blk.call(path)
     end
     
     def size

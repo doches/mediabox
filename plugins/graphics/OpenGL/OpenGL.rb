@@ -4,6 +4,7 @@ require 'rubygame/named_resource'
 require 'plugins/graphics/graphicsplugin'
 require 'opengl'
 require 'lib/store'
+require 'plugins/graphics/SDL/resource'
 
 class OpenGL < GraphicsPlugin
   include Rubygame
@@ -73,7 +74,6 @@ class OpenGL < GraphicsPlugin
     } if not do_redraw
     # Ok, redraw it
     if do_redraw
-      puts "draw #{Time.now}"
       glClear(GL_COLOR_BUFFER_BIT)
       screen.drawlist.each { |widget| 
         widget.draw
@@ -110,41 +110,6 @@ class OpenGL < GraphicsPlugin
     attr_accessor :surface,:size
   end
   
-  class SDLRawResource < RawResource
-    def initialize( name, &blk )
-      Plugin.loader.screens.autoload_dirs.each { |dir|
-        if File.exists?(File.join(dir,name))
-          Mediabox::Logger.log("Loading resource #{name} ... OK")
-          path = "#{dir}/#{name}"
-          @surface = blk.call(path)
-          return
-        end
-      }
-      throw LoadError.new("#{name} not found")
-    end
-    
-    def size
-      @surface.size
-    end
-  end
-  
-  class SDLResource < SDLRawResource
-    def initialize(name, &blk)
-      begin
-        super
-      rescue LoadError
-        Mediabox::Logger.log("Loading resource #{name} ... FAILED")
-        @surface = Rubygame::Surface.new([64,64])
-        @surface.fill([255,0,0])
-        begin
-          @surface.set_alpha(128)
-        rescue
-          ;
-        end
-      end
-    end
-  end
-
   def load_image(path,store)
     sdl_surf = SDLResource.new(path) { |path| Rubygame::Surface.load_image(path) }
     store = bind_surface(path,sdl_surf,@texture_id)
