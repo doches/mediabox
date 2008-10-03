@@ -5,12 +5,16 @@ class Rotate < Plugin
     @tick = Time.now.to_i
     @interval = Plugin.preferences['Rotate.interval'].to_i
     @interval ||= 5
+  end
+  
+  def load
     @list = Plugin.loader.screens.screenlist
     @current = @list.index("#{Plugin.loader.screens.current.class}".to_sym)
     @current ||= 0
   end
   
   def update
+    load if @list.nil?
     tock = Time.now.to_i
     if tock - @tick > @interval
       @tick = tock
