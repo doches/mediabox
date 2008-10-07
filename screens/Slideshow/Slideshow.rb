@@ -82,6 +82,7 @@ class Slideshow < Screen
         @image.alpha = 255 if @image.alpha > 255
         @image2.alpha = 0 if @image2.alpha < 0
       else
+        @image2.alpha = 0
         @fade = false
       end
     end
