@@ -32,13 +32,13 @@ class PluginLoader
         end
         list.each { |klass|
           Logger.log("Loading plugin *#{klass}")
-          require "plugins/#{klass}/#{klass}"
+          require File.join("plugins",klass,klass)
           @slotless_plugins[klass.to_sym] = eval("#{klass}.new")
         }
       elsif key =~ /^Plugin\.(\S+)$/
         slot = $1
         Logger.log("Loading plugin #{slot}:#{value}")
-        require "plugins/#{slot}/#{value}/#{value}"
+        require File.join("plugins",slot,value,value)
         eval("@plugins[slot.to_sym] = #{value}.new")
       end
     rescue LoadError
