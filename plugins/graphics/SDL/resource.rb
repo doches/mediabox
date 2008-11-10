@@ -10,7 +10,7 @@
         end
       }
       if File.exists?(name)
-        load("",name,blk)
+        load(nil,name,blk)
       else
         throw LoadError.new("#{name} not found")
       end
@@ -18,8 +18,9 @@
     
     def load(dir,name,blk)
       Mediabox::Logger.log("Loading resource #{name} ... OK")
-      path = "#{dir}/#{name}"
-      @surface = blk.call(path)
+      STDERR.puts "{ #{dir} | #{name} }"
+      name = File.join(dir,name) if not dir.nil?
+      @surface = blk.call(name)
     end
     
     def size
