@@ -11,10 +11,11 @@ class Slideshow < Screen
     
     @files = []
     @index = 0
-    dirs = Screen.preferences["Slideshow.directories"].split(/[, ]+/)
+    dirs = Screen.preferences["Slideshow.directories"].split(",")
+    p dirs
+  
     dirs.each do |path|
-      path = "#{path}/" if not path[path.size-1].chr == "/"
-      Dir.foreach(path) { |file| @files.push("#{path}#{file}") if file.downcase =~ /(jpg)|(png)|(jpeg)$/ }
+      Dir.foreach(path) { |file| @files.push(File.join(path, file)) if file.downcase =~ /(jpg)|(png)|(jpeg)$/ } if File.exists?( path )
     end
     @index = (rand * @files.size-1).to_i
     @old_tick = Time.now.to_i
@@ -75,15 +76,19 @@ class Slideshow < Screen
   def update
     tick = Time.now.to_i
     if @fade
-      if @image.alpha < 255
-        @image.alpha += @fadestep
-        @image2.alpha -= @fadestep
-        
-        @image.alpha = 255 if @image.alpha > 255
-        @image2.alpha = 0 if @image2.alpha < 0
-      else
-        @image2.alpha = 0
+      if @image.alpha >= 255
         @fade = false
+      else
+        if @image.alpha + @fadestep < 255
+          @image.alpha += @fadestep
+        else
+          @image.alpha = 255
+        end
+        if @image2.alpha - @fadestep > 0
+          @image2.alpha -= @fadestep
+        else
+          @image2.alpha = 0
+        end
       end
     end
     if tick - @old_tick > Interval and not @paused
